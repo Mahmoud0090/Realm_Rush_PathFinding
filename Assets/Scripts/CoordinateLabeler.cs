@@ -11,8 +11,8 @@ public class CoordinateLabeler : MonoBehaviour
     //when building the game this script must be in Editor folder in unity 
     //as all files in that folder are ignored when building the game
 
-    [SerializeField] Color defaultColor = Color.black;
-    [SerializeField] Color blockedColor = Color.white;
+    [SerializeField] Color defaultColor = Color.white;
+    [SerializeField] Color blockedColor = Color.gray;
 
     [SerializeField] Color exploredtColor = Color.yellow;
     [SerializeField] Color pathColor = new Color(1f , 0.5f , 0f); //orange color
@@ -62,7 +62,7 @@ public class CoordinateLabeler : MonoBehaviour
             label.color = pathColor;
         }
 
-        else if (!node.isExplored)
+        else if (node.isExplored)
         {
             label.color = exploredtColor;
         }
