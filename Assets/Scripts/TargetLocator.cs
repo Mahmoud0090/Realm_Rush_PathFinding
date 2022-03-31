@@ -37,6 +37,8 @@ public class TargetLocator : MonoBehaviour
 
     void AimWeapon()
     {
+        if(target == null) { return; }
+
         float targetDistance = Vector3.Distance(transform.position, target.position);
 
         weapon.LookAt(target);
@@ -53,6 +55,7 @@ public class TargetLocator : MonoBehaviour
 
     void Attack(bool isActive)
     {
+        if(target == null) { return; }
         var emissionModule = projectileParticle.emission;
         emissionModule.enabled = isActive;
     }

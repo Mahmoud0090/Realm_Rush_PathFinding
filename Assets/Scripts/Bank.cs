@@ -14,8 +14,13 @@ public class Bank : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI displayBalance;
 
+    [SerializeField] TextMeshProUGUI NumOfEnemies;
+
+    ObjectPool objectPool;
+
     private void Awake()
     {
+        objectPool = FindObjectOfType<ObjectPool>();
         currentBalance = startingBalance;
         UpdateDisplay();
     }
@@ -24,6 +29,12 @@ public class Bank : MonoBehaviour
     {
         currentBalance += Mathf.Abs(amount);
         UpdateDisplay();
+    }
+
+    public void NextLevel()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex + 1);
     }
 
     public void Withdraw(int amount)
@@ -39,6 +50,8 @@ public class Bank : MonoBehaviour
 
     void UpdateDisplay()
     {
+        NumOfEnemies.text = "Enemies NO " + objectPool.CountingNumWaves.ToString() + "/ " + 
+            objectPool.GetNumOfAllEnemies().ToString();
         displayBalance.text = "Gold : " + currentBalance.ToString();
     }
 
