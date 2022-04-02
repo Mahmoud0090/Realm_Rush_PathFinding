@@ -9,18 +9,19 @@ public class Bank : MonoBehaviour
 {
     [SerializeField] int startingBalance = 150;
 
-    [SerializeField]int currentBalance;
+    int currentBalance;
     public int CurrentBalance { get { return currentBalance; } }
+
+    [SerializeField] int targetGold = 200;
 
     [SerializeField] TextMeshProUGUI displayBalance;
 
-    [SerializeField] TextMeshProUGUI NumOfEnemies;
+    [SerializeField] TextMeshProUGUI targetGoldText;
 
-    ObjectPool objectPool;
+
 
     private void Awake()
     {
-        objectPool = FindObjectOfType<ObjectPool>();
         currentBalance = startingBalance;
         UpdateDisplay();
     }
@@ -31,10 +32,19 @@ public class Bank : MonoBehaviour
         UpdateDisplay();
     }
 
+    private void Update()
+    {
+        NextLevel();
+    }
+
     public void NextLevel()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.buildIndex + 1);
+
+        if(currentBalance >= targetGold)
+        {
+            SceneManager.LoadScene(currentScene.buildIndex + 1);
+        }
     }
 
     public void Withdraw(int amount)
@@ -50,9 +60,8 @@ public class Bank : MonoBehaviour
 
     void UpdateDisplay()
     {
-        NumOfEnemies.text = "Enemies NO " + objectPool.CountingNumWaves.ToString() + "/ " + 
-            objectPool.GetNumOfAllEnemies().ToString();
         displayBalance.text = "Gold : " + currentBalance.ToString();
+        targetGoldText.text = "Target Gold : " + targetGold.ToString();
     }
 
     void ReloadScene()
